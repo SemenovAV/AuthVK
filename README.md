@@ -1,49 +1,100 @@
 # VKAuth
 
-## Authorization on VK for humans
+## Авторизация в VK
 
-VKAuth is a lightweight flexible module for you to easily get an access_token for your application, which uses VK API.
-This module is written in `python 3.5`.
+VKAuth - модуль для авторизации и получения OAuth-токена для вашего приложения.
 
-## Usage
+## Использование
 
-1. `import` the module into your project
-2. Create new class instance with appropriate parameters. Call `auth()` method to start connection and get `access_token` and `user_id`. That's it!
+1. Импортируйте модуль в ваш проект.
+2. Создайте екземпляр класса с требуемыми параметрами. 
+3. Вызовите метод `get_auth()` для получения `access_token` , `user_id` и сессии.
 
-Class parameters:
 
-1. Required
-  - `permissions`: `list` - permissions your app wants to get
-  - `app_id`: `string` - id of your app
-  - `api_v`: `string` - VK API version
-2. Optional
-  - `email`: `string` - email to log in with | default: `None`
-  - `pswd`: `string` - password for account with `email` | default: `None`
-  - `two_factor_auth`: `bool` - whether to use two-factor authentication or not | default: `False`
-  - `security_code`: `string` - code to log in with in case of two-factor auth. | default: `None`
-  - `auto_access`: `bool` - whether to allow to grant access to `permissions` automatically (needed only once) | default: `True`
+Обязательные параметры:
+
+  - `login` - логин для аунтентификации в VK.
+  
+  - `password` - пароль для аунтефикации в VK.
+  
+Необязателбьные параметры:
+
+  - `config` - конфигурация:
+  
+  - `client_id` - id приложения для которого получается токен
+    
+  - `scope` - Разрешения которые требуются приложению
+    
+  - `redcirect_url` - Редирект урл указанный в настройках приложения 
+    
+  - `v` - версия апи
+    
+    пример:
+```python
+{
+    "client_id": "7395093",
+    "scope": "friends,groups,offline",
+    "redirect_url": "https://oauth.vk.com/blank.html",
+    "v": "5.103"
+}
 
 ```
-vk = VKAuth(['photos'], '123123', '5.52')
-vk.auth()
 
-access_token = vk.get_token()
-user_id = vk.get_user_id()
+                
+   - `user_agent` - строка user-agent.
+   
+   - `auth_url` - урл сервера OAuth авторизации VK.
 
-# your code goes here
+   - `logger` - python логгер.
+   
+   - `auto` - включает основной рабочий режим, при котором обрабатывается функция 
+   переданная параметром form_data_handler.
+   
+   - `form_data_handler` - функция обработчик данных приходящих с сервера. 
+   
+В функцию `form_data_handler` передается три параметра:
+
+1. Контекст - экземпляр класса.
+2. Словарь параметров полученный из парсера форм - то что надо обработать.
+3. Поле из словаря параметров, которое обрабатывается.
+Функция должна возвращать требуемое значение.
+
+Пример, обработка аунтификации:
+
+Если в словаре params есть поля `email` и `pass` - требуется аунтефикация, 
+если обрабатывается поле `pass` (третьий параметр key == `pass`) - отдаем поле `password` экземпляра класса,
+если нет отдаем поле `email` экземпляра класса.
+```python
+def handler(ctx, params, key):
+    if 'email' in params and 'pass' in params:
+        return ctx.password if key == 'pass' else ctx.email
 ```
 
-## Features
+По умолчанию в `form_data_handler` передается функция обработчик -  `form_data_handlers.hendler`
 
-- Ease of use
-- Works great with two-factor authentication: set `two_factor_auth=True` and provide the `security_code` at initialization time or enter when prompted
-- Provide email and passwords at initialization time or be prompted to enter them
-- Exception handling and responsiveness
+Функция по умолчанию обрабатывает:
+-аунтификация по логину и паролю
+-аунтификация, второй фактор - код (выкидывает запрос кода в консоль)
+-Капча (выкидывает ссылку на капчу и запрос кода в консоль )
+-авторизацию (автамотическое подтверждение всех переданных в `scope` разрешений)
 
-## Dependencies
+подробнее:
+
+
+При `auto=False` параметр `form_data_handler` не учитывается. Класс находится в тестовом 
+режиме при котором удобно делать отладку.Первым следует вызывать метод `get_login_form`, 
+далее по очереди для каждой формы:
+
+1. `parse_form` - для обработки полей формы требующих внимания. Метод принимает один параметр - функцию обработчик.
+
+2. `submit_form` - для отправки обработанной формы.
+
+подробнее:
+
+
+## Сторонние зависимости
 
 - [requests](https://github.com/kennethreitz/requests/) module
-- HTMLParser
-- getpass
+- [colorlog](https://github.com/borntyping/python-colorlog) module
 
-If you find bugs or have suggestions about improving the module, don't hesitate to contact me.
+

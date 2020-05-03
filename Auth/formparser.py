@@ -1,7 +1,8 @@
+from abc import ABC
 from html.parser import HTMLParser
 
 
-class FormParser(HTMLParser):
+class FormParser(HTMLParser, ABC):
     def __init__(self):
         HTMLParser.__init__(self)
         self.url = None

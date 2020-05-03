@@ -77,7 +77,7 @@ class Auth:
                 if 'email' in params and 'pass' in params:
                     return ctx.password if key == 'pass' else ctx.email
         """
-        self.config = {} or config
+        self.config = config or {}
         self.user_agent = user_agent
         self.auth_url = auth_url
         self.email = login
@@ -176,6 +176,8 @@ class Auth:
                 'redirect_uri': 'https://oauth.vk.com/blank.html',
                 'v': '5.103',
             }
+            if not self.config:
+                self.config.update(config)
             config.update({
                 'display': 'wap',
                 'response_type': 'token',
@@ -229,6 +231,8 @@ class Auth:
                 'access_token': OAuth-токен,
                 'user_id': id пользователя для которого выдан токен,
                 'session': Requests сесия.
+                'scope': Разрешения на которые распрастраняется токен
+                'v': версия апи
         }
         """
         try:
@@ -236,7 +240,9 @@ class Auth:
             return {
                 'access_token': params[0].split('=')[1],
                 'user_id': params[2].split('=')[1],
-                'session': self.session
+                'session': self.session,
+                'scope': self.config['scope'],
+                'v': self.config['v']
             }
         except IndexError as err:
             return False

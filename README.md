@@ -21,16 +21,16 @@ VKAuth - модуль для авторизации и получения OAuth-
 
   - `config` - конфигурация:
   
-  - `client_id` - id приложения для которого получается токен
+      - `client_id` - id приложения для которого получается токен
     
-  - `scope` - Разрешения которые требуются приложению
+      - `scope` - Разрешения которые требуются приложению
     
-  - `redcirect_url` - Редирект урл указанный в настройках приложения 
+      - `redcirect_url` - Редирект урл указанный в настройках приложения 
     
-  - `v` - версия апи
+      - `v` - версия апи
     
     пример:
-```python
+```json
 {
     "client_id": "7395093",
     "scope": "friends,groups,offline",
@@ -52,12 +52,15 @@ VKAuth - модуль для авторизации и получения OAuth-
    
    - `form_data_handler` - функция обработчик данных приходящих с сервера. 
    
+   
 В функцию `form_data_handler` передается три параметра:
 
 1. Контекст - экземпляр класса.
 2. Словарь параметров полученный из парсера форм - то что надо обработать.
 3. Поле из словаря параметров, которое обрабатывается.
 Функция должна возвращать требуемое значение.
+
+
 
 Пример, обработка аунтификации:
 
@@ -90,6 +93,25 @@ def handler(ctx, params, key):
 2. `submit_form` - для отправки обработанной формы.
 
 подробнее:
+
+Пример:
+```python
+from Auth.Auth import Auth
+from urllib.parse import urlencode
+
+my_auth = Auth(login="12345", password="vasia")
+
+data = my_auth.get_auth()
+
+if data and 'session' in data:
+    params = {
+        'access_token': data.get('access_token'),
+        'v': data.get('v')
+    }
+    session = data['session']
+    response = session.get(f'https://api.vk.com/method/users.get?{urlencode(params)}')
+...
+```
 
 
 ## Сторонние зависимости

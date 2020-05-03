@@ -1,3 +1,5 @@
 from Auth.Auth import Auth
 
-my_auth = Auth(password="", login="")
+my_auth = Auth(login="", password="")
+
+

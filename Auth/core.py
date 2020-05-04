@@ -1,11 +1,11 @@
+from logging import getLogger
 from typing import Dict, Callable
 from urllib.parse import urlencode
 
 import requests
 
 from .form_data_handlers.handler import handler
-from .formparser import FormParser
-from .logger.get_logger import logger as log
+from .parser.formparser import FormParser
 
 
 class Auth:
@@ -20,6 +20,7 @@ class Auth:
     password: str
     session: any
     logger: any
+    logger_level: str
     auto: bool
     form_data_handler: Callable
 
@@ -29,7 +30,8 @@ class Auth:
                  auth_url='https://oauth.vk.com/authorize',
                  login=None,
                  password=None,
-                 logger=log,
+                 logger=None,
+                 logger_level='CRITICAL',
                  auto=True,
                  form_data_handler=handler
 
@@ -54,6 +56,7 @@ class Auth:
         :param login: Логин для аунтентификации в VK.
         :param password: Пароль для аунтефикации в VK.
         :param logger: Python логгер.
+        :param logger_level: Уровень срабатывания логера.
         :param auto: Включает основной рабочий режим, при котором обрабатывается
                 функция переданная параметром form_data_handler.
                 При auto == False form_data_handler не используется.
@@ -85,7 +88,8 @@ class Auth:
         self.session = requests.Session()
         self.main_url = 'https://m.vk.com'
         self.login_url = 'https://login.vk.com'
-        self.logger = logger
+        self.logger = logger or getLogger()
+        self.logger.setLevel(logger_level)
         self.parser = None
         self.next_url = None
         self.next_params = None

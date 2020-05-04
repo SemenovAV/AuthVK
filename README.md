@@ -1,8 +1,18 @@
-# VKAuth
+# AuthVK
 
 ## Авторизация в VK
 
-VKAuth - модуль для авторизации и получения OAuth-токена для вашего приложения.
+AuthVK - модуль для авторизации и получения OAuth-токена для вашего приложения.
+## Установка
+Для того чтобы установить AuthVk, просто выполните:
+
+`pip install git+https://github.com/SemenovAV/AuthVK#egg=AuthVK`
+
+Для работы модуля требуется установленовка дополнительно установить:
+
+- [requests](https://github.com/kennethreitz/requests/) 
+- [setuptools](https://github.com/pypa/setuptools/)
+
 
 ## Использование
 
@@ -96,7 +106,7 @@ def handler(ctx, params, key):
 
 Пример:
 ```python
-from Auth.Auth import Auth
+from Auth.core import Auth
 from urllib.parse import urlencode
 
 my_auth = Auth(login="12345", password="vasia")
@@ -113,10 +123,5 @@ if data and 'session' in data:
 ...
 ```
 
-
-## Сторонние зависимости
-
-- [requests](https://github.com/kennethreitz/requests/) module
-- [colorlog](https://github.com/borntyping/python-colorlog) module
 
 

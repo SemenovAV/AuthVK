@@ -1,12 +1,12 @@
 from setuptools import setup
 
 setup(
-    name='AuthVK',
-    version='0.1.0',
-    packages=['Auth', 'Auth.parser', 'Auth.form_data_handlers'],
-    url='https://github.com/SemenovAV/VKAuth',
+    name='VKAuth',
+    version='0.1.1',
+    packages=['AuthVK', 'AuthVK.parser', 'AuthVK.form_data_handlers'],
+    url='https://github.com/SemenovAV/AuthVK',
     license='',
     author='SemenovAV',
     author_email='7.on.off@bk.ru',
-    description='module for authorization and obtaining an OAuth token for your application.'
+    description='Module for authorization and obtaining an OAuth token for your application.'
 )

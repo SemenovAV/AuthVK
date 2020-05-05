@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='authvk',
+    name='AuthVK',
     version='0.1.1',
     packages=['AuthVK', 'AuthVK.parser', 'AuthVK.form_data_handlers'],
     url='https://github.com/SemenovAV/AuthVK',

@@ -3,7 +3,8 @@ from setuptools import setup
 setup(
     name='AuthVK',
     version='0.1.1',
-    packages=['AuthVK', 'AuthVK.parser', 'AuthVK.form_data_handlers'],
+    packages=['AuthVK', 'AuthVK.parser', 'AuthVK.form_data_handlers',],
+    install_requires=['requests',]
     url='https://github.com/SemenovAV/AuthVK',
     license='',
     author='SemenovAV',

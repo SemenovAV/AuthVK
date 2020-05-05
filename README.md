@@ -10,11 +10,6 @@ AuthVK - модуль для авторизации и получения OAuth-
 
 `pip install git+https://github.com/SemenovAV/AuthVK#egg=authvk`
 
-Для работы модуля требуется дополнительно установить:
-
-- [requests](https://github.com/kennethreitz/requests/) 
-- [setuptools](https://github.com/pypa/setuptools/)
-
 
 ### Использование
 ---

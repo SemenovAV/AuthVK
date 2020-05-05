@@ -1,8 +1,8 @@
-from Auth.form_data_handlers.get_captcha_data import get_captcha_data
-from Auth.form_data_handlers.is_allow_access import is_allow_access
-from Auth.form_data_handlers.is_an_need_auth import is_an_need_auth
-from Auth.form_data_handlers.is_an_need_captcha_key import is_an_need_captcha_key
-from Auth.form_data_handlers.is_an_need_two_fact_auth import is_an_need_two_fact_auth
+from AuthVK.form_data_handlers.get_captcha_data import get_captcha_data
+from AuthVK.form_data_handlers.is_allow_access import is_allow_access
+from AuthVK.form_data_handlers.is_an_need_auth import is_an_need_auth
+from AuthVK.form_data_handlers.is_an_need_captcha_key import is_an_need_captcha_key
+from AuthVK.form_data_handlers.is_an_need_two_fact_auth import is_an_need_two_fact_auth
 
 
 def handler(ctx, params, key):

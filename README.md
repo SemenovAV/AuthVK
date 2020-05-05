@@ -109,7 +109,7 @@ def handler(ctx, params, key):
 
 Пример работы:
 ```python
-from Auth.core import Auth
+from AuthVK.core import Auth
 from urllib.parse import urlencode
 
 my_auth = Auth(login="12345", password="vasia")

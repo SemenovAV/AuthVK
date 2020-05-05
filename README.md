@@ -8,7 +8,7 @@ AuthVK - модуль для авторизации и получения OAuth-
 
 Для того чтобы установить AuthVk, просто выполните:
 
-`pip install git+https://github.com/SemenovAV/AuthVK#egg=AuthVK`
+`pip install git+https://github.com/SemenovAV/AuthVK#egg=authvk`
 
 Для работы модуля требуется дополнительно установить:
 
